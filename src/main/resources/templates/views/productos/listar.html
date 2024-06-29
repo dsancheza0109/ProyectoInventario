@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/template :: head}">
+    <title th:text="${titulo}">Listar Productos</title>
+</head>
+<body>
+    <header th:replace="~{plantilla/template :: header}"></header>
+    <div class="container">
+        <h2 th:text="${titulo}">Productos</h2>
+        
+        <!-- Botón para registrar un nuevo producto -->
+        <div class="mb-3">
+            <a th:href="@{/views/productos/create}" class="btn btn-primary">Nuevo Producto</a>
+        </div>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Unidad de Medida</th>
+                    <th>Categoría</th>
+                    <th>Proveedor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.id}"></td>
+                    <td th:text="${producto.codigo}"></td>
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.descripcion}"></td>
+                    <td th:text="${producto.precio}"></td>
+                    <td th:text="${producto.stock}"></td>
+                    <td th:text="${producto.unidadMedida}"></td>
+                    <td th:text="${producto.categoria?.nombre}"></td> <!-- Usando el operador seguro ?. -->
+                    <td th:text="${producto.proveedor?.nombre}"></td> <!-- Usando el operador seguro ?. -->
+                    <td>
+                        <a th:href="@{/views/productos/edit/{id}(id=${producto.id})}" class="btn btn-warning">Editar</a>
+                        <a th:href="@{/views/productos/delete/{id}(id=${producto.id})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:replace="~{plantilla/template :: footer}"></footer>
+</body>
+</html>

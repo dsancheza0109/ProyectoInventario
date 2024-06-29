@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/template :: head}">
+    <title th:text="${titulo}">Movimiento de Inventario</title>
+</head>
+<body>
+    <header th:replace="~{plantilla/template :: header}"></header>
+    <div class="container">
+        <h2 th:text="${titulo}">Nuevo Movimiento de Inventario</h2>
+        <form th:action="@{/views/movimientos/save}" th:object="${movimiento}" method="post">
+            <div class="form-group">
+                <label for="codigoProducto">Código Producto</label>
+                <input type="text" id="codigoProducto" th:field="*{codigoProducto}" class="form-control" />
+                <div th:if="${#fields.hasErrors('codigoProducto')}" th:errors="*{codigoProducto}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <select id="tipo" th:field="*{tipo}" class="form-control">
+                    <option value="Entrada">Entrada</option>
+                    <option value="Salida">Salida</option>
+                </select>
+                <div th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad</label>
+                <input type="number" id="cantidad" th:field="*{cantidad}" class="form-control" />
+                <div th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="datetime-local" id="fecha" th:field="*{fecha}" class="form-control" />
+                <div th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" th:field="*{observaciones}" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <select id="usuario" th:field="*{usuario.id}" class="form-control">
+                    <option th:each="usuario : ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nombre}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </form>
+    </div>
+    <footer th:replace="~{plantilla/template :: footer}"></footer>
+</body>
+</html>

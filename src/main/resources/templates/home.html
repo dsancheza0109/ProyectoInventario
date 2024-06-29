@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/template :: head}">
+</head>
+
+<body>
+    <header th:replace="~{plantilla/template :: header}">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Inventario</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/views/productos/}">Listar Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/views/productos/create}">Crear Producto</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+        <div class="card-body bg-light justify-content-center align-items-center">
+            <img th:src="@{/images/icons-user-64m.png}" height="150" width="150" alt="Icono Usuario Masculino">
+            <img th:src="@{/images/icons-user-64f.png}" height="150" width="150" alt="Icono Usuario Femenino">
+            <h1>.: Curso: Lenguaje de Programación II :.</h1>
+            <h2>.: Grupo IV: :.</h2>
+        </div>
+    </div>
+    <footer th:replace="~{plantilla/template :: footer}"></footer>
+</body>
+</html>
+

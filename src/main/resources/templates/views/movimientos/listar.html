@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/template :: head}">
+</head>
+
+<body>
+    <header th:replace="~{plantilla/template :: header}"></header>
+    <div class="container">
+        <h2>Lista de Movimientos de Inventario</h2>
+        <a th:href="@{/views/movimientos/create}" class="btn btn-success mb-3">Nuevo Movimiento</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código Producto</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                    <th>Observaciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="movimiento : ${movimientos}">
+                    <td th:text="${movimiento.id}">1</td>
+                    <td th:text="${movimiento.codigoProducto}">P001</td>
+                    <td th:text="${movimiento.tipo}">Entrada</td>
+                    <td th:text="${movimiento.cantidad}">10</td>
+                    <td th:text="${#dates.format(movimiento.fecha, 'yyyy-MM-dd HH:mm:ss')}">2024-06-26</td>
+                    <td th:text="${movimiento.observaciones}">Observación</td>
+                    <td>
+                        <a th:href="@{/views/movimientos/edit/{id}(id=${movimiento.id})}" class="btn btn-primary">Editar</a>
+                        <a th:href="@{/views/movimientos/delete/{id}(id=${movimiento.id})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:replace="~{plantilla/template :: footer}"></footer>
+</body>
+</html>
