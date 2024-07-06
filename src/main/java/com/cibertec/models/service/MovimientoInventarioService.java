@@ -8,4 +8,5 @@ public interface MovimientoInventarioService {
     MovimientoInventario findById(int id);
     void save(MovimientoInventario movimientoInventario);
     void delete(int id);
+    
 }

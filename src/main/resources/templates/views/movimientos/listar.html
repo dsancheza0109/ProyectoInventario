@@ -7,7 +7,31 @@
     <header th:replace="~{plantilla/template :: header}"></header>
     <div class="container">
         <h2>Lista de Movimientos de Inventario</h2>
-        <a th:href="@{/views/movimientos/create}" class="btn btn-success mb-3">Nuevo Movimiento</a>
+        <div class="container">
+			<form th:action="@{/views/movimientos/filtrar}"  method="get">
+	            <div class="row">
+					<div class="col">
+					  <a th:href="@{/views/movimientos/create}" class="btn btn-success mb-3">Nuevo Movimiento</a>
+					</div>
+					<div class="form-row align-items-center">
+						<div class="col-auto">
+							<div class="input-group input-group-sm mb-3">
+							  <div class="input-group-prepend">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">Codigo</span>
+							  </div>
+							  <input type="number" id="movimientoId" name="movimientoId" class="form-control" />
+							</div>
+						</div>
+						<div class="col-auto">
+							<div class="button">
+							    <input class="btn btn-primary" type="submit" value="Buscar">
+							</div>
+						</div>
+					</div>  
+	            </div> 
+			</form>
+        </div>
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -33,6 +57,7 @@
                         <a th:href="@{/views/movimientos/delete/{id}(id=${movimiento.id})}" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
+				
             </tbody>
         </table>
     </div>

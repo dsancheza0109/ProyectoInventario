@@ -31,4 +31,5 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
     public void delete(int id) {
         movimientoInventarioRepository.deleteById(id);
     }
+    
 }

@@ -8,6 +8,15 @@ import java.util.Date;
 
 @Entity
 @Table(name="movimientoinventario")
+
+@NamedStoredProcedureQuery(
+	    name = "MovimientoInventario.findById",
+	    procedureName = "GetMovimientoInventarioById",
+	    resultClasses = MovimientoInventario.class,
+	    parameters = {
+	        @StoredProcedureParameter(mode = ParameterMode.IN, name = "nroMovimiento", type = Integer.class)
+	    }
+)
 public class MovimientoInventario implements Serializable {
 
     private static final long serialVersionUID = 1L;

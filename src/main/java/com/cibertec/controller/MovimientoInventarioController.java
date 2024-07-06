@@ -39,9 +39,21 @@ public class MovimientoInventarioController {
     @GetMapping("/views/movimientos/")
     public String listar(Model model) {
         model.addAttribute("movimientos", movimientoInventarioService.findAll());
+        System.out.println(movimientoInventarioService.findAll());
         return "views/movimientos/listar";
     }
-
+    
+    
+    @GetMapping("/views/movimientos/filtrar")
+    public String filtrar(@RequestParam(value = "movimientoId", required = false) Integer id, Model model) {
+        if (id != null) {
+            MovimientoInventario movimiento = movimientoInventarioService.findById(id);
+            model.addAttribute("movimientos", movimiento);
+        } else {
+        	model.addAttribute("movimientos", movimientoInventarioService.findAll());
+        }
+        return "views/movimientos/listar";
+    }
     @GetMapping("/views/movimientos/create")
     public String crear(Model model) {
         model.addAttribute("movimiento", new MovimientoInventario());
