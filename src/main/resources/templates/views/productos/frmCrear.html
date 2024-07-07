@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{plantilla/template :: head}">
+<head th:replace="~{plantilla/template2 :: head}">
     <title th:text="${titulo}">Crear/Editar Producto</title>
 </head>
 <body>
-    <header th:replace="~{plantilla/template :: header}"></header>
+    <header th:replace="~{plantilla/template2 :: header}"></header>
     <div class="container">
         <h2 th:text="${titulo}">Producto</h2>
         <form th:action="@{/views/productos/save}" th:object="${producto}" method="post">

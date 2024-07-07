@@ -33,4 +33,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void delete(Integer id) {
         usuarioRepository.deleteById(id);
     }
+
+	@Override
+	public Usuario findByEmailandPassword(String Email, String Password) {
+		// TODO Auto-generated method stub
+		return usuarioRepository.findByEmailAndPassword(Email, Password);
+	}
 }

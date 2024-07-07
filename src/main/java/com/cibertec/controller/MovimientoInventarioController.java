@@ -16,6 +16,9 @@ import com.cibertec.models.entity.MovimientoInventario;
 import com.cibertec.models.service.MovimientoInventarioService;
 import com.cibertec.models.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,9 +40,20 @@ public class MovimientoInventarioController {
     }
 
     @GetMapping("/views/movimientos/")
-    public String listar(Model model) {
+    public String listar(Model model, HttpServletRequest request) {
         model.addAttribute("movimientos", movimientoInventarioService.findAll());
-        return "views/movimientos/listar";
+        HttpSession session = request.getSession();
+        String rolUsuarioActivo = (String) session.getAttribute("rolActivo");
+        if (rolUsuarioActivo != null) {
+            if (rolUsuarioActivo.trim().equals("Gerente")) {
+                return "views/movimientos/listar";
+            } else if (rolUsuarioActivo.trim().equals("Empleado")) {
+                return "views/movimientos/listar2";
+            }
+        }
+        
+        
+        return "redirect:/index";
     }
 
     @GetMapping("/views/movimientos/create")

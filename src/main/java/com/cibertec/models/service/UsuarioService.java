@@ -9,4 +9,5 @@ public interface UsuarioService {
     Usuario findById(Integer id);
     void save(Usuario usuario);
     void delete(Integer id);
+    Usuario findByEmailandPassword(String Email , String Password);
 }

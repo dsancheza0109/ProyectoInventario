@@ -7,9 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import com.cibertec.models.entity.Usuario;
 import com.cibertec.models.service.UsuarioService;
@@ -22,17 +28,26 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping("/")
-    public String listar(Model model) {
-    	System.out.println("estoy en el listar de usuario controller ");
+    public String listar(Model model, HttpServletRequest request) {
+    	System.out.println("Estoy en el listar");
     	List<Usuario> usuariosList = usuarioService.findAll();
-        model.addAttribute("usuarios", usuariosList);
+    
+        HttpSession session = request.getSession();
         
-        for(Usuario usu : usuariosList) {
-        	System.out.println(usu);
+        String rolUsuarioActivo = (String) session.getAttribute("rolActivo");
+        
+        model.addAttribute("usuarios", usuariosList);
+        if (rolUsuarioActivo != null) {
+            if (rolUsuarioActivo.trim().equals("Gerente")) {
+                return "views/usuarios/listar";
+            } else if (rolUsuarioActivo.trim().equals("Empleado")) {
+                return "views/usuarios/listar2";
+            }
         }
         
-        return "views/usuarios/listar";
+        return "redirect:/index";     	           
     }
+    
 
     @GetMapping("/create")
     public String crear(Model model) {
@@ -69,4 +84,46 @@ public class UsuarioController {
         usuarioService.delete(id);
         return "redirect:/views/usuarios/";
     }
+    
+    
+    @PostMapping("/login")
+    public String sesionUsuario(@RequestParam String email, @RequestParam String contraseña, 
+    	RedirectAttributes redirectAttributes,  HttpServletRequest request) {
+        System.out.println("estoy en el sesion usuarios " + email +" " + contraseña);
+        Usuario usuarioSesion = usuarioService.findByEmailandPassword(email, contraseña);
+
+        if(usuarioSesion!= null) {
+            String nombreUsuario = usuarioSesion.getNombre();
+            String rolUsuario = usuarioSesion.getRol();
+
+            HttpSession session = request.getSession();
+            session.setAttribute("nombreActivo", nombreUsuario);
+            session.setAttribute("rolActivo", rolUsuario);
+            
+            redirectAttributes.addFlashAttribute("usuarioSesion", usuarioSesion);
+            
+            System.out.println("Nombre del usuario activo: " + usuarioSesion.getNombre());
+            System.out.println("Rol del usuario activo: " + usuarioSesion.getRol());
+            return "redirect:/views/usuarios/";
+        	
+        } else {
+        	 redirectAttributes.addAttribute("error", "Correo electrónico o contraseña incorrectos");
+        	return "redirect:/index";
+        }
+        
+        
+        
+    }
+    
+    @PostMapping("/logout")
+    public String cerrarSesion(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); 
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/index"; 
+    }
+    
+    
+    
 }

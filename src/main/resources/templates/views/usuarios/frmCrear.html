@@ -1,35 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{plantilla/template :: head}">
+<head th:replace="~{plantilla/template2 :: head}">
     <title th:text="${titulo}">Crear/Editar Usuarios</title>
 </head>
 <body>
-    <header th:replace="~{plantilla/template :: header}"></header>
-	<div class="container">
-			<div class="card bg-light">
-				<div class="card-header bg-dark text-white" th:text="${titulo}"></div>
-				<div class="card-body">
-					<form th:action="@{/views/usuarios/save}" th:object="${usuario}" method="post">
-						<label hidden for="id">id</label>
-						<input hidden type="text" id="id" th:field="*{id}" /><br/>
-												
-						<label for="nombre">Nombre:</label>
-						<input type="text" id="nombre" th:field="*{nombre}" /><br/>
-						
-						<label for="apellido">email:</label>
-						<input type="text" id="email" th:field="*{email}" /><br/>
-						
-						<label for="password">password : </label>
-						<input type="text" id="password" th:field="*{password}" /><br/>
-						
-						<label for="rol">rol :</label>
-						<input type="text" id="rol" th:field="*{rol}" /><br/>
-						
-						<button type="submit">Guardar</button>
-					</form>
-				</div>
-			</div>
-	</div>
+    <header th:replace="~{plantilla/template2 :: header}"></header>
+	<div class="container mt-4">
+	     <div class="card">
+	         <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+	         <div class="card-body">
+	             <form th:action="@{/views/usuarios/save}" th:object="${usuario}" method="post" class="needs-validation"
+	                 novalidate>
+
+	                 <!-- Hidden ID field -->
+	                 <input type="hidden" id="id" th:field="*{id}" />
+
+	                 <!-- Nombre -->
+	                 <div class="form-group">
+	                     <label for="nombre">Nombre:</label>
+	                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+	                     <div class="invalid-feedback">
+	                         Por favor ingresa un nombre válido.
+	                     </div>
+	                 </div>
+
+	                 <!-- Email -->
+	                 <div class="form-group">
+	                     <label for="email">Email:</label>
+	                     <input type="email" class="form-control"  id="email" th:field="*{email}" required>
+	                     <div class="invalid-feedback">
+	                         Por favor ingresa un email válido.
+	                     </div>
+	                 </div>
+
+	                 <!-- Password -->
+	                 <div class="form-group">
+	                     <label for="password">Password:</label>
+	                     <input type="text" class="form-control" id="password" th:field="*{password}" required>
+	                     <div class="invalid-feedback">
+	                         Por favor ingresa una contraseña válida.
+	                     </div>
+	                 </div>
+
+	                 <!-- Rol -->
+	                 <div class="form-group">
+	                     <label for="rol">Rol:</label>
+	                     <input type="text" class="form-control" id="rol" th:field="*{rol}" required>
+	                     <div class="invalid-feedback">
+	                         Por favor ingresa un rol válido.
+	                     </div>
+	                 </div>
+
+	                 <!-- Botón de guardar -->
+	                 <button type="submit" class="btn btn-primary">Guardar</button>
+
+	             </form>
+	         </div>
+	     </div>
+	 </div>
     <footer th:replace="~{plantilla/template :: footer}"></footer>
 </body>
 </html>
