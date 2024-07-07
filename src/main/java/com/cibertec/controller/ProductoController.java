@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cibertec.models.entity.Producto;
+
 import com.cibertec.models.service.CategoriaService;
 import com.cibertec.models.service.ProductoService;
 import com.cibertec.models.service.ProveedorService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProductoController {
@@ -26,9 +30,22 @@ public class ProductoController {
     private ProveedorService proveedorService;
 
     @GetMapping("/views/productos/")
-    public String listar(Model model) {
+    public String listar(Model model , HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+    	String rolUsuarioActivo = (String) session.getAttribute("rolActivo");
+    	
         model.addAttribute("productos", productoService.findAll());
-        return "views/productos/listar";
+        if (rolUsuarioActivo != null) {
+            if (rolUsuarioActivo.trim().equals("Gerente")) {
+                return "views/productos/listar";
+            } else if (rolUsuarioActivo.trim().equals("Empleado")) {
+                return "views/productos/listar2";
+            }
+        }
+        
+        return "redirect:/index";
+        
+        
     }
 
     @GetMapping("/views/productos/create")

@@ -9,12 +9,8 @@
     <div class="container">
 		
         <h2 th:text="${titulo}"></h2>
-		<h2 th:text="${nombreActivo}"></h2>
 		
         <!-- Botón para registrar un nuevo producto -->
-        <div class="mb-3">
-            <a th:href="@{/views/usuarios/create}" class="btn btn-primary">Nuevo Usuario</a>
-        </div>
         
         <table class="table table-striped">
 			
@@ -24,7 +20,7 @@
                     <th>Nombre</th>
 					<th>Email</th>
                     <th>Rol</th>
-					<th>Acciones</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -33,10 +29,7 @@
                     <td th:text="${usuario.nombre}"></td>
                     <td th:text="${usuario.email}"></td>
                     <td th:text="${usuario.rol}"></td>
-                    <td>
-                        <a th:href="@{/views/usuarios/edit/{id}(id=${usuario.id})}" class="btn btn-warning">Editar</a>
-                        <a th:href="@{/views/usuarios/delete/{id}(id=${usuario.id})}" class="btn btn-danger">Eliminar</a>
-                    </td>
+
                 </tr>
             </tbody>
         </table>

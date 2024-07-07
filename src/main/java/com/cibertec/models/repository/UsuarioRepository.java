@@ -7,4 +7,5 @@ import com.cibertec.models.entity.Usuario;
 
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
+	 Usuario findByEmailAndPassword(String email, String contraseña);
 }
